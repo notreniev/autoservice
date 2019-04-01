@@ -1,0 +1,28 @@
+<ion-header>
+  <custom-logged-header [title]="'User Profile'"></custom-logged-header>
+</ion-header>
+
+
+<ion-content padding>
+  <user-info [user]="currentUser"></user-info>
+
+  <button ion-button block (click)="canEdit = !canEdit">Editar</button>
+  <form (ngSubmit)="onSubmit($event)" *ngIf="canEdit" #profileForm="ngForm">
+
+    <ion-item>
+      <ion-input type="text" placeholder="Nome" name="nome" [(ngModel)]="currentUser.nome" required minlenght="3"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input type="text" placeholder="Usuário" name="usuario" [(ngModel)]="currentUser.usuario" required minlenght="3"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-icon name="image" item-left></ion-icon>
+      <input type="file" (change)="onPhoto($event)">
+    </ion-item>
+
+    <progress-bar *ngIf="uploadProgress" [progress]="uploadProgress"></progress-bar>
+    <br>
+
+    <button ion-button block type="submit" [disabled]="profileForm.form.invalid">Salvar</button>
+  </form>
+</ion-content>
